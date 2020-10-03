@@ -65,6 +65,11 @@
   --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
 
   --global-transistion--opacity-box: opacity 0.15s ease-in 0.1s;
+
+    /* page layout */
+  --global-page-color: var(--global-color-neutral-xxxx-dark);
+  --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+
 }
 
 /*------------------------------------*\
@@ -81,8 +86,8 @@ html {
   font-size: 16px;
   line-height: 1.5;
   font-family: "Inter Web", Helvetica, arial, sans-serif;
-  color: var(--global-color-neutral-xxxx-dark);
-  background-color: var(--global-color-neutral-xxxx-light);
+  color: var(--global-page-color);
+  background-color: var(--global-page-backgroundColor);
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -523,15 +528,15 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-  fill: var(--global-color-neutral-xxxx-dark);
+  fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
 }
 
 .c-logo__path--2 {
-  fill: var(--global-color-alpha);
+  fill: var(--logo__path--2--fill, var(--global-color-alpha));
 }
 
 .c-logo__path--3 {
-  fill: var(--color-alpha-x-dark);
+  fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
 }
 
 /*
@@ -541,7 +546,9 @@ input::placeholder {
 */
 
 .c-card {
-  background-color: White;
+  --card__footer-borderColor: var(--global-color-neutral-xxx-light);
+
+  background-color: var(--card-backgroundColor, White);
   margin-bottom: var(--global-whitespace);
   border-radius: var(--global-borderRadius);
   box-shadow: 0 0 0 var(--global-borderWidth) rgba(0, 0, 0, 0.05),
@@ -558,7 +565,7 @@ input::placeholder {
 .c-card__footer {
   text-align: center;
   border-top: var(--global-borderWidth) solid
-    var(--global-color-neutral-xxx-light);
+    var(--card__footer-borderColor);
 }
 
 .c-card__title {
@@ -631,8 +638,8 @@ input::placeholder {
 
 .c-input:focus,
 .c-input:active {
-  border-color: var(--global-input-borderColor);
-  box-shadow: 0 0 0 3px var(--global-input-boxShadow);
+  border-color: var(--global-input-focus-borderColor);
+  box-shadow: var(--global-input-boxShadow);
 }
 
 /* option input for checkboxes and radio buttons */
@@ -681,14 +688,17 @@ input::placeholder {
 
 .c-custom-option {
   display: flex;
+  --custom-option-backgroundColor: white;
   --custom-option-borderColor: var(--global-input-borderColor);
   --custom-option-focus-borderColor: var(--global-input-focus-borderColor);
+  --custom-option-symbol-color: var(--global-color-alpha);
 }
 
 .c-custom-option__fake-input {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--custom-option-backgroundColor);
   width: 16px;
   height: 16px;
   border: 1px solid var(--custom-option-borderColor);
@@ -714,14 +724,14 @@ input::placeholder {
   /*Stuff for the checkbox icon...*/
   width: 10px;
   height: 10px;
-  fill: var(--global-color-alpha);
+  fill: var(--custom-option-symbol-color);
 }
 
 .c-custom-option__fake-input--radio .c-custom-option__symbol {
   /*Stuff for the radio button icon...*/
   width: 6px;
   height: 6px;
-  background-color: var(--global-color-alpha);
+  background-color: var(--custom-option-symbol-color);
   border-radius: 100%;
 }
 
@@ -830,12 +840,13 @@ input::placeholder {
   font-size: 14px;
   padding-bottom: var(--global-whitespace-xs);
   line-height: calc(var(--global-baseline) * 2);
-  color: var(--global-color-neutral-xx-dark);
+  color: var(--label-color), var(--global-color-neutral-xx-dark);
 }
 
 .c-label--option {
   padding-bottom: 0;
 }
+
 
 /*
     Component: Button
@@ -1206,6 +1217,43 @@ No media query since this is the default in mobile first design
 /* Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {}
 */
+
+/*
+    Darktheme
+    ---
+    This values are active when the os darktheme is on.
+*/
+
+@media (prefers-color-scheme: dark){
+
+  :root{
+    --global-page-color: white;
+    --global-page-backgroundColor: #20223A;
+    --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha);
+  }
+
+  .c-card{
+    --card-backgroundColor: #35374D;
+    --card__footer-borderColor: #20223A;
+  }
+
+  .c-label{
+    --label-color: #B5B6C0;
+  }
+
+  .c-logo {
+    --logo__path--1--fill: White;
+    --logo__path--2--fill: var(--logo__path--1--fill);
+    --logo__path--3--fill: var(--logo__path--1--fill);
+  }
+
+  .c-custom-option {
+    --custom-option-borderColor: #20223A;
+    --custom-option-backgroundColor: #20223A;
+  }
+  
+}
+
 
 /*
     Print styles.
