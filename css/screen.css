@@ -752,6 +752,19 @@ input::placeholder {
   transition: all var(--transition-alpha);
 }
 
+.c-custom-select {
+  display: block;
+}
+
+.c-custom-select__symbol {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  fill: var(--global-color-neutral-x-light);
+  pointer-events: none;
+  margin: 12px 12px 12px -36px;
+}
+
 .c-option--hidden:checked
   + .c-custom-toggle
   .c-custom-toggle__fake-input::after {
